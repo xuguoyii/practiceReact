@@ -1,5 +1,4 @@
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     devtool: 'eval-source-map',
@@ -28,13 +27,21 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /.less$/,
-                use: ['style-loader', 'css-loader', 'less-loader']
+                test: /\.(less|css)$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    }, {
+                        loader: "css-loader",
+                    }, {
+                        loader: "postcss-loader"
+                    },
+                ]
             }
         ]
     },
     plugins: [
         new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
 
-    ]
+    ],
 }
